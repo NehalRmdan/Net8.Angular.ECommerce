@@ -1,8 +1,10 @@
-﻿using API.Data;
-using API.Entities;
+﻿using Infrastructure.Data;
+using Core.Entities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.EntityFrameworkCore;
+using core.Interfaces;
+using core.Entities;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -12,19 +14,18 @@ namespace API.Controllers
     [ApiController]
     public class ProductsController : ControllerBase
     {
-        private readonly StoreContext _storeContext;
-        public ProductsController(StoreContext storeContext)
+        private readonly IProductRepository _productRepository;
+
+        public ProductsController(IProductRepository productRepository)
         {
-            _storeContext = storeContext;
+            _productRepository= productRepository;
         }
 
         // GET: api/<ProductsController>
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Product>>> Get()
         {
-            var products= await _storeContext.Products.ToListAsync();
-            if(products is null)
-                return NotFound("products are not exist.");
+            var products= await _productRepository.GetProducts();
             return Ok(products);
         }
 
@@ -32,10 +33,22 @@ namespace API.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Product>> Get(int id)
         {
-             var product= await _storeContext.Products.FindAsync(id);
-            if(product is null)
-                return NotFound($"product {id} is not exist.");
+             var product= await _productRepository.GetProductByIdAsync(id);
             return Ok(product);
+        }
+
+        [HttpGet("brands")]
+        public async Task<ActionResult<IEnumerable<ProductBrand>>> GetBrands()
+        {
+            var productsBrands= await _productRepository.GetProductBarnds();
+            return Ok(productsBrands);
+        }
+
+         [HttpGet("types")]
+        public async Task<ActionResult<IEnumerable<ProductType>>> GetTypes()
+        {
+            var productsTypes= await _productRepository.GetProductTypes();
+            return Ok(productsTypes);
         }
 
         // POST api/<ProductsController>
