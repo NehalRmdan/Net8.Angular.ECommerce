@@ -14,18 +14,25 @@ namespace API.Controllers
     [ApiController]
     public class ProductsController : ControllerBase
     {
-        private readonly IProductRepository _productRepository;
+        private readonly IGenericRepository<Product> _productRepository;
+        private readonly IGenericRepository<ProductBrand> _productBrandRepository;
+        private readonly IGenericRepository<ProductType> _productTypeRepository;
 
-        public ProductsController(IProductRepository productRepository)
+        public ProductsController(IGenericRepository<Product> productRepository
+        ,IGenericRepository<ProductBrand> productBrandRepository
+        ,IGenericRepository<ProductType> productTypeRepository
+        )
         {
-            _productRepository= productRepository;
+            _productRepository = productRepository;
+            _productBrandRepository = productBrandRepository;
+            _productTypeRepository = productTypeRepository;
         }
 
         // GET: api/<ProductsController>
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Product>>> Get()
         {
-            var products= await _productRepository.GetProducts();
+            var products= await _productRepository.GetListAsync();
             return Ok(products);
         }
 
@@ -33,21 +40,21 @@ namespace API.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Product>> Get(int id)
         {
-             var product= await _productRepository.GetProductByIdAsync(id);
+             var product= await _productRepository.GetByID(id);
             return Ok(product);
         }
 
         [HttpGet("brands")]
         public async Task<ActionResult<IEnumerable<ProductBrand>>> GetBrands()
         {
-            var productsBrands= await _productRepository.GetProductBarnds();
+            var productsBrands= await _productBrandRepository.GetListAsync();
             return Ok(productsBrands);
         }
 
          [HttpGet("types")]
         public async Task<ActionResult<IEnumerable<ProductType>>> GetTypes()
         {
-            var productsTypes= await _productRepository.GetProductTypes();
+            var productsTypes= await _productTypeRepository.GetListAsync();
             return Ok(productsTypes);
         }
 

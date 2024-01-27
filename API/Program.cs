@@ -4,6 +4,7 @@ using core.Interfaces;
 using Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using IInfrastructure.Data;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace API;
 
@@ -24,6 +25,8 @@ public class Program
         options.UseSqlite(configuration.GetConnectionString("DefaultConnection")));
         
         builder.Services.AddScoped<IProductRepository,ProductRepository>();
+        builder.Services.AddScoped(typeof(IGenericRepository<>) ,typeof(GenericRepository<>));
+
 
         var app = builder.Build();
 
