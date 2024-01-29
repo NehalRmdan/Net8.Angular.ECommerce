@@ -5,6 +5,7 @@ using Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using IInfrastructure.Data;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
+using API.Helper;
 
 namespace API;
 
@@ -24,6 +25,8 @@ public class Program
         builder.Services.AddDbContext<StoreContext>(options=> 
         options.UseSqlite(configuration.GetConnectionString("DefaultConnection")));
         
+        builder.Services.AddAutoMapper(typeof(MappingProfiles));
+
         builder.Services.AddScoped<IProductRepository,ProductRepository>();
         builder.Services.AddScoped(typeof(IGenericRepository<>) ,typeof(GenericRepository<>));
 
@@ -49,6 +52,7 @@ public class Program
 
         app.UseAuthorization();
 
+        app.UseStaticFiles();
 
         app.MapControllers();
 
