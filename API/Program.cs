@@ -6,6 +6,9 @@ using Microsoft.EntityFrameworkCore;
 using IInfrastructure.Data;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using API.Helper;
+using API.Middleware;
+using Microsoft.AspNetCore.Mvc;
+using API.Errors;
 
 namespace API;
 
@@ -29,16 +32,36 @@ public class Program
 
         builder.Services.AddScoped<IProductRepository,ProductRepository>();
         builder.Services.AddScoped(typeof(IGenericRepository<>) ,typeof(GenericRepository<>));
+        builder.Services.Configure<ApiBehaviorOptions>(options =>
+            {
+                options.InvalidModelStateResponseFactory = actionContext =>
+                {
+                    var errors = actionContext.ModelState
+                        .Where(e => e.Value.Errors.Count > 0)
+                        .SelectMany(x => x.Value.Errors)
+                        .Select(x => x.ErrorMessage).ToArray();
 
+                    var errorResponse = new APIValidationResponse
+                    {
+                        Errors = errors
+                    };
+
+                    return new BadRequestObjectResult(errorResponse);
+                };
+            });
 
         var app = builder.Build();
-
+        
         // Configure the HTTP request pipeline.
         if (app.Environment.IsDevelopment())
         {
             app.UseSwagger();
             app.UseSwaggerUI(); 
         }
+
+       app.UseStatusCodePagesWithReExecute("/errors/{0}");
+         
+        app.UseMiddleware<ExcptionMiddleware>();
 
    //for production environment it is recommended to use generation scripts from migrations
          using (var scope = app.Services.CreateScope())
@@ -48,6 +71,9 @@ public class Program
 
         StoreCotenxtDataSeeding.SeedData(db);
         }
+
+        
+
         app.UseHttpsRedirection();
 
         app.UseAuthorization();
