@@ -35,9 +35,10 @@ namespace API.Controllers
 
         // GET: api/<ProductsController>
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Product>>> Get()
+        public async Task<ActionResult<IEnumerable<Product>>> Get(string sort
+        , int? brandId, int? typeId)
         {
-            ProductsWithTypesAndBrandsSpecification p = new ProductsWithTypesAndBrandsSpecification();
+            ProductsWithTypesAndBrandsSpecification p = new ProductsWithTypesAndBrandsSpecification(sort,brandId, typeId);
             var products= await _productRepository.GetListAsync(p);
             
            var productsToReturn= _mapper.Map<IReadOnlyCollection<Product>,IReadOnlyCollection<ProductToReturn>>(products);

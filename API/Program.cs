@@ -9,6 +9,7 @@ using API.Helper;
 using API.Middleware;
 using Microsoft.AspNetCore.Mvc;
 using API.Errors;
+using API.Extensions;
 
 namespace API;
 
@@ -30,28 +31,10 @@ public class Program
         
         builder.Services.AddAutoMapper(typeof(MappingProfiles));
 
-        builder.Services.AddScoped<IProductRepository,ProductRepository>();
-        builder.Services.AddScoped(typeof(IGenericRepository<>) ,typeof(GenericRepository<>));
-        builder.Services.Configure<ApiBehaviorOptions>(options =>
-            {
-                options.InvalidModelStateResponseFactory = actionContext =>
-                {
-                    var errors = actionContext.ModelState
-                        .Where(e => e.Value.Errors.Count > 0)
-                        .SelectMany(x => x.Value.Errors)
-                        .Select(x => x.ErrorMessage).ToArray();
-
-                    var errorResponse = new APIValidationResponse
-                    {
-                        Errors = errors
-                    };
-
-                    return new BadRequestObjectResult(errorResponse);
-                };
-            });
+        builder.Services.AddApplicationServices();
 
         var app = builder.Build();
-        
+
         // Configure the HTTP request pipeline.
         if (app.Environment.IsDevelopment())
         {
