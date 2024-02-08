@@ -130,3 +130,6 @@ D:\Projects\Development Plan\net8\SportsECommerce\api\bin\Debug\net8.0\Infrastru
 D:\Projects\Development Plan\net8\SportsECommerce\api\bin\Debug\net8.0\Infrastructure.pdb
 D:\Projects\Development Plan\net8\SportsECommerce\api\bin\Debug\net8.0\core.pdb
 D:\Projects\Development Plan\net8\SportsECommerce\api\obj\Debug\net8.0\API.sourcelink.json
+D:\Projects\Development Plan\net8\SportsECommerce\api\bin\Debug\net8.0\AutoMapper.dll
+D:\Projects\Development Plan\net8\SportsECommerce\api\bin\Debug\net8.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll
+D:\Projects\Development Plan\net8\SportsECommerce\api\bin\Debug\net8.0\API.staticwebassets.runtime.json
