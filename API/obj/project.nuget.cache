@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "vFRTbHnG78UecpCz5yYXnnPKladgnkCUPIicu5CvII3JB8yvG5HpoObReFe++vFhhrnH5eNOf1fToJLN7lvuRA==",
+  "dgSpecHash": "ie7vugnFFcoznGFVAHU5OZdkmh68g/aGP+7fOnrBHMfNzjbqGsejeJSZbwfLSqhLCo9p36OwDemtaHivQH9SaA==",
   "success": true,
-  "projectFilePath": "D:\\Projects\\Development Plan\\net8\\SportsECommerce\\API\\API.csproj",
+  "projectFilePath": "D:\\Projects\\Development Plan\\net8\\SportsECommerce\\api\\API.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\nehal.ramadan\\.nuget\\packages\\automapper\\12.0.1\\automapper.12.0.1.nupkg.sha512",
     "C:\\Users\\nehal.ramadan\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\12.0.1\\automapper.extensions.microsoft.dependencyinjection.12.0.1.nupkg.sha512",

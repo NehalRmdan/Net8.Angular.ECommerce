@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Projects\\Development Plan\\net8\\SportsECommerce\\API\\API.csproj": {}
+    "D:\\Projects\\Development Plan\\net8\\SportsECommerce\\api\\API.csproj": {}
   },
   "projects": {
-    "D:\\Projects\\Development Plan\\net8\\SportsECommerce\\API\\API.csproj": {
+    "D:\\Projects\\Development Plan\\net8\\SportsECommerce\\api\\API.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Projects\\Development Plan\\net8\\SportsECommerce\\API\\API.csproj",
+        "projectUniqueName": "D:\\Projects\\Development Plan\\net8\\SportsECommerce\\api\\API.csproj",
         "projectName": "API",
-        "projectPath": "D:\\Projects\\Development Plan\\net8\\SportsECommerce\\API\\API.csproj",
+        "projectPath": "D:\\Projects\\Development Plan\\net8\\SportsECommerce\\api\\API.csproj",
         "packagesPath": "C:\\Users\\nehal.ramadan\\.nuget\\packages\\",
-        "outputPath": "D:\\Projects\\Development Plan\\net8\\SportsECommerce\\API\\obj\\",
+        "outputPath": "D:\\Projects\\Development Plan\\net8\\SportsECommerce\\api\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"

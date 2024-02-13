@@ -35,29 +35,23 @@ namespace API.Controllers
 
         // GET: api/<ProductsController>
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Product>>> Get(string sort
-        , int? brandId, int? typeId)
+        public async Task<ActionResult<Pagination<ProductToReturn>>> Get([FromQuery] ProductSpecParams productParams)
         {
-            ProductsWithTypesAndBrandsSpecification p = new ProductsWithTypesAndBrandsSpecification(sort,brandId, typeId);
-            var products= await _productRepository.GetListAsync(p);
+            ProductsWithTypesAndBrandsSpecification p = new ProductsWithTypesAndBrandsSpecification(productParams);
             
-           var productsToReturn= _mapper.Map<IReadOnlyCollection<Product>,IReadOnlyCollection<ProductToReturn>>(products);
+             ProductsWithFiltersForCountSpecification pForCount = new ProductsWithFiltersForCountSpecification(productParams);
+
+            var products= await _productRepository.GetListAsync(p);
+            var productsTotalCount= await _productRepository.GetCountAsync(pForCount);
+           var productsToReturnData= _mapper.Map<IReadOnlyList<Product>,IReadOnlyList<ProductToReturn>>(products);
           
-            return Ok(productsToReturn);
-            // return Ok(  products.Select(product=> new ProductToReturn()
-            // {
-            //     Name= product.Name,
-            //     Description= product.Description,
-            //     Price= product.Price,
-            //     PictureUrl= product.PictureUrl,
-            //     ProductBrandName= product.ProductBrand.Name,
-            //     ProductTypeName= product.ProductType.Name
-            // }));
+           var r= new Pagination<ProductToReturn>(productParams.PageIndex,productParams.PageSize,productsTotalCount, productsToReturnData);
+            return Ok(r);
         }
 
         // GET api/<ProductsController>/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Product>> Get(int id)
+        public async Task<ActionResult<ProductToReturn>> Get(int id)
         {
              ProductsWithTypesAndBrandsSpecification p = new ProductsWithTypesAndBrandsSpecification(id);
 

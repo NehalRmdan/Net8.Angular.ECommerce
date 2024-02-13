@@ -28,12 +28,17 @@ namespace Infrastructure.Data
            return await ApplySpecification(specification).FirstOrDefaultAsync();
         }
 
+        public async Task<int> GetCountAsync(ISpecification<T> specification)
+        {
+          return await ApplySpecification(specification).CountAsync();
+        }
+
         public async Task<IReadOnlyCollection<T>> GetListAsync()
         {
              return await _storeContext.Set<T>().ToListAsync();
         }
 
-          public async Task<IReadOnlyCollection<T>> GetListAsync(ISpecification<T> spec)
+          public async Task<IReadOnlyList<T>> GetListAsync(ISpecification<T> spec)
         {
              return await ApplySpecification(spec).ToListAsync();
         }

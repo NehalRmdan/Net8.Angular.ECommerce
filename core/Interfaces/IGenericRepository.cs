@@ -9,9 +9,12 @@ namespace core.Interfaces
 {
     public interface IGenericRepository<T>  
     {
+
         public Task<IReadOnlyCollection<T>> GetListAsync();
         
-        public Task<IReadOnlyCollection<T>> GetListAsync(ISpecification<T> specification);
+        public Task<IReadOnlyList<T>> GetListAsync(ISpecification<T> specification);
+
+        public Task<int> GetCountAsync(ISpecification<T> specification);
 
         public Task<T> GetByID(int id);
 
