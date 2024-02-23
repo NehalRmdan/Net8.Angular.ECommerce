@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ShopService } from './shop.service';
 import { IProduct } from '../shared/Models/IProduct';
+import { IBrand } from '../shared/Models/Brand';
+import { IProductType } from '../shared/Models/ProductType';
 
 @Component({
   selector: 'app-shop',
@@ -9,7 +11,11 @@ import { IProduct } from '../shared/Models/IProduct';
 })
 export class ShopComponent implements OnInit {
   
-  products : IProduct[]= [];
+  products : IProduct[] =[];
+  brands : IBrand[]= [];
+  types : IProductType[]= [];
+  selectedBrnadId=0;
+  selectedTypeId=0;
   
   constructor(private shopService: ShopService)
   {
@@ -17,15 +23,45 @@ export class ShopComponent implements OnInit {
   }
   ngOnInit(): void {
 
-    this.shopService.getProducts().subscribe({
-     next: response =>{ this.products= response.data ?? []},
-     error: (e) => { console.log(e)}
-    });
+    this.getProducts();
 
-    this.shopService.getProducts().subscribe(
-      response =>{ this.products= response.data ?? []}
-      , error =>{console.log(error);}
-      );
+    this.getBrands();
+
+    this.getProductTypes();
+  }
+
+
+  private getProductTypes() {
+    this.shopService.getProductTypes().subscribe({
+      next: response => { this.types = [{"id":0,"name":"All"},...response] ; },
+      error: (e) => { console.log(e); }
+    });
+  }
+
+  private getBrands() {
+    this.shopService.getBrands().subscribe({
+      next: response => { this.brands = [{"id":0,"name":"All"},...response]; },
+      error: (e) => { console.log(e); }
+    });
+  }
+
+  private getProducts() {
+    this.shopService.getProducts(this.selectedBrnadId, this.selectedTypeId).subscribe({
+      next: response => { this.products = response?.data ?? []; },
+      error: (e) => { console.log(e); }
+    });
+  }
+
+  onSelectBranad(id : number){
+    debugger;
+    this.selectedBrnadId= id;
+    this.getProducts();
+  }
+
+  onSelectType(id : number){
+    debugger;
+    this.selectedTypeId= id;
+    this.getProducts();
   }
 
 }
