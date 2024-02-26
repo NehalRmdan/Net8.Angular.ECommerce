@@ -4,6 +4,7 @@ import { IProducts } from '../shared/Models/IProducts';
 import { Observable, map } from 'rxjs';
 import { IBrand } from '../shared/Models/Brand';
 import { IProductType } from '../shared/Models/ProductType';
+import { ShopParams } from '../shared/Models/ShopParams';
 
 
 @Injectable({
@@ -13,18 +14,25 @@ export class ShopService {
   baseUrl: any="https://localhost:7105/api/";
   constructor(private http : HttpClient) { }
 
-  getProducts (brandId?: number, typeId? : number) : Observable<IProducts|null>
+  getProducts (shopParams: ShopParams) : Observable<IProducts|null>
   {
     let params= new HttpParams();
-    if(brandId)
+    if(shopParams.brandId)
     {
-      params= params.append("brandId",brandId.toString());
+      params= params.append("brandId",shopParams.brandId.toString());
     }
     
-    if(typeId)
+    if(shopParams.typeId)
     {
-      params= params.append("typeId",typeId.toString());
+      params= params.append("typeId",shopParams.typeId.toString());
     }
+
+
+    params= params.append("sort",shopParams.sortOption);
+    
+    params= params.append("pageSize",shopParams.pageSize);
+
+    params= params.append("pageIndex",shopParams.pageNumber);
 
     let productsUrl= this.baseUrl+"products"
     return this.http

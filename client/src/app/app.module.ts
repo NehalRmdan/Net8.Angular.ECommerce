@@ -19,7 +19,8 @@ import { ShopModule } from './shop/shop.module';
     AppRoutingModule,
     BrowserAnimationsModule,
     CoreModule,
-    ShopModule
+    ShopModule,
+    
   ],
   providers: [
     provideClientHydration(),
