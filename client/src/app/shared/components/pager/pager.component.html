@@ -1,1 +1,9 @@
-<p>pager works!</p>
+@if(this.totalCount > 0)
+{
+<div class=" d-flex justify-content-center my-3">
+    <pagination     
+    [totalItems]="this.totalCount"
+    [itemsPerPage]="this.pageSize"
+    (pageChanged)="onPagerChange($event)"></pagination>
+</div>
+}

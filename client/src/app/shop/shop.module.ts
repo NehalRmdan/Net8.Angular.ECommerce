@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ShopComponent } from './shop.component';
 import { ProductItemComponent } from './product-item/product-item.component';
-import { PaginationModule,PaginationConfig } from 'ngx-bootstrap/pagination';
 import { SharedModule } from '../shared/shared.module';
 
 
@@ -14,11 +13,10 @@ import { SharedModule } from '../shared/shared.module';
   ],
   imports: [
     CommonModule,
-    PaginationModule,
     SharedModule
   ],
   providers: [
-    PaginationConfig
+    
   ],
   exports:[
     ShopComponent

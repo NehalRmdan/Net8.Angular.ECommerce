@@ -41,13 +41,10 @@
             <header>
                 <div class="d-flex justify-content-between">
                     <app-paging-header [totalCount]="totalCount" [pageNumber]="shopParams.pageNumber" [pageSize]="shopParams.pageSize"></app-paging-header>
-                 <div class="d-flex justify-content-end">
-                        <form class="d-flex" mr-2 role="search">
-                        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                        <button class="btn btn-outline-primary" type="submit">Search</button>
-                        <button class="btn btn-outline-success" type="reset">Reset</button>
-                    
-                    </form>
+                 <div class="d-flex justify-content-end mb-3">
+                        <input #search class="form-control me-2" type="search" placeholder="Search" aria-label="Search" (keyup)="onSearchClicked()">
+                        <button class="btn btn-outline-primary" type="submit" (click)="onSearchClicked()">Search</button>
+                        <button class="btn btn-outline-success" type="reset" (click)="onResetClicked()">Reset</button>
                     </div>
                 </div>
                 
@@ -63,13 +60,5 @@
         </section>
 
     </div>
-    @if(this.totalCount > 0)
-    {
-    <div class=" d-flex justify-content-center my-3">
-        <pagination     
-        [totalItems]="this.totalCount"
-        [itemsPerPage]="this.shopParams.pageSize"
-        (pageChanged)="onPageChanged($event)"></pagination>
-    </div>
-    }
+    <app-pager [totalCount]="totalCount" [pageSize]="shopParams.pageSize" (pageChanges)="onPageChanged($event)"></app-pager>
 </div>
