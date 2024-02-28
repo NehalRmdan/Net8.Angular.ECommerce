@@ -5,6 +5,7 @@ import { Observable, map } from 'rxjs';
 import { IBrand } from '../shared/Models/Brand';
 import { IProductType } from '../shared/Models/ProductType';
 import { ShopParams } from '../shared/Models/ShopParams';
+import { IProduct } from '../shared/Models/IProduct';
 
 
 @Injectable({
@@ -42,6 +43,12 @@ export class ShopService {
     return this.http
     .get<IProducts>(productsUrl,{observe: 'response', params})
     .pipe( map( response => {return response?.body}));
+  }
+
+  getProduct (id: number) : Observable<IProduct>
+  {
+    let productsUrl= this.baseUrl+"products/"+ id;
+    return this.http.get<IProduct>(productsUrl);
   }
 
   getBrands () : Observable<IBrand[]>

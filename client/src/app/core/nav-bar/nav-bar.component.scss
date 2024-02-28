@@ -11,14 +11,17 @@
 
 }
 
-.a{
+a{
     color: navy;
-    &active{
+    &link-secondary{
         color: orange;
     }
 }
 
-.router-link-active
+.logo{
+cursor: pointer;
+&:focus
 {
-    color: orange;
+    outline:none;
+}
 }
