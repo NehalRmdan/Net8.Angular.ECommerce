@@ -10,3 +10,15 @@
     right: 20px;
 
 }
+
+.a{
+    color: navy;
+    &active{
+        color: orange;
+    }
+}
+
+.router-link-active
+{
+    color: orange;
+}
