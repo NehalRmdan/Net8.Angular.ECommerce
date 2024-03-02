@@ -5,11 +5,12 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NavBarComponent } from './core/nav-bar/nav-bar.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { provideHttpClient, withFetch } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, provideHttpClient, withFetch, withInterceptorsFromDi } from '@angular/common/http';
 import { CoreModule } from './core/core.module';
 import { ShopComponent } from './shop/shop.component';
 import { ShopModule } from './shop/shop.module';
 import { HomeModule } from './home/home.module';
+import { ErrorInterceptor } from './core/interceptors/error.interceptor';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,15 @@ import { HomeModule } from './home/home.module';
   ],
   providers: [
     provideClientHydration(),
-    provideHttpClient(withFetch())
+    provideHttpClient(withFetch()),
+    [
+      provideHttpClient(
+        // DI-based interceptors must be explicitly enabled.
+        withInterceptorsFromDi(),
+      ),
+      {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true},
+    ]
+    
   ],
   bootstrap: [AppComponent]
 })
