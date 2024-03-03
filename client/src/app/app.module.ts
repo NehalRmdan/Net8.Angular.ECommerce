@@ -11,6 +11,7 @@ import { ShopComponent } from './shop/shop.component';
 import { ShopModule } from './shop/shop.module';
 import { HomeModule } from './home/home.module';
 import { ErrorInterceptor } from './core/interceptors/error.interceptor';
+import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
   declarations: [
@@ -20,6 +21,12 @@ import { ErrorInterceptor } from './core/interceptors/error.interceptor';
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
+    ToastrModule.forRoot(
+      {
+        positionClass: 'toast-bottom-right',
+        preventDuplicates : true
+      }
+    ), // ToastrModule added
     CoreModule,
     HomeModule
   ],

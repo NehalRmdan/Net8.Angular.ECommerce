@@ -1,12 +1,13 @@
 import { HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { Router } from "@angular/router";
+import { NavigationExtras, Router } from "@angular/router";
+import { ToastrService } from "ngx-toastr";
 import { Observable, catchError, throwError } from "rxjs";
 
 @Injectable()
  export class ErrorInterceptor implements HttpInterceptor {
 
-  constructor(private _router : Router)
+  constructor(private _router : Router, private toastr: ToastrService)
   {
 
   }
@@ -23,10 +24,21 @@ import { Observable, catchError, throwError } from "rxjs";
           } else {
               console.log('This is server side error');
               errorMsg = `Error Code: ${error.status},  Message: ${error.message}`;
-              if(error.status == 404)
+              if(error.status === 400)
+              {
+                if(error.error.errors){
+                  throw error.error;
+                }
+                else
+                  this.toastr.error(error.error.message, error.error.statusCode)
+              }
+              else if(error.status === 404)
                 this._router.navigate(['/not-found'])
               else if(error.status === 500)
-                 this._router.navigate(['/server-error'])
+              {
+                const navigationExtra:NavigationExtras={state: error.error};
+                 this._router.navigateByUrl('/server-error',navigationExtra);
+              }
 
           }
           console.log(errorMsg);

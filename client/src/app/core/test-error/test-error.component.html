@@ -4,5 +4,16 @@
     <button class="btn btn-outline-primary me-3" (click)="get500Err()"> Test 500 Error </button>
     <button class="btn btn-outline-primary me-3" (click)="get400Err()"> Test 400 Error </button>
     <button class="btn btn-outline-primary me-3" (click)="get400ValidationErr()"> Test 400  Validation Error </button>
-
 </div>
+
+@if(validationErrors){
+    <div class="row mt-5">
+        <ul>
+              @for (error of validationErrors; track error) {
+                <li class="text-danger">
+                    {{error}}
+                </li>
+                }
+        </ul>
+    </div>
+}
