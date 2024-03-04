@@ -10,6 +10,8 @@ using API.Middleware;
 using Microsoft.AspNetCore.Mvc;
 using API.Errors;
 using API.Extensions;
+using StackExchange.Redis;
+using Humanizer.Configuration;
 
 namespace API;
 
@@ -29,6 +31,11 @@ public class Program
         builder.Services.AddDbContext<StoreContext>(options=> 
         options.UseSqlite(configuration.GetConnectionString("DefaultConnection")));
         
+        builder.Services.AddSingleton<IConnectionMultiplexer>(c => {
+            var config= ConfigurationOptions.Parse(configuration.GetConnectionString("Redis"));
+            return ConnectionMultiplexer.Connect(config);
+        });
+
         builder.Services.AddAutoMapper(typeof(MappingProfiles));
 
         builder.Services.AddApplicationServices();
@@ -54,8 +61,6 @@ public class Program
 
         StoreCotenxtDataSeeding.SeedData(db);
         }
-
-        
 
         app.UseHttpsRedirection();
 
