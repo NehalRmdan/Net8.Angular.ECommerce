@@ -5,7 +5,12 @@ import { ProductItemDetailComponent } from './product-item-detail/product-item-d
 const routes: Routes = [
   
     {path:'', component: ShopComponent},
-    {path:':id', component: ProductItemDetailComponent},
+    {path:':id', component: ProductItemDetailComponent,  data: {
+      breadcrumb: {
+        alias: 'productDetails'
+      }
+    }
+}, 
   
 ];
 @NgModule({

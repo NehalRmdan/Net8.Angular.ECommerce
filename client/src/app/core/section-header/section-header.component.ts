@@ -1,0 +1,17 @@
+import { Component } from '@angular/core';
+import { Observable } from 'rxjs';
+import { BreadcrumbService } from 'xng-breadcrumb';
+
+@Component({
+  selector: 'app-section-header',
+  templateUrl: './section-header.component.html',
+  styleUrl: './section-header.component.scss'
+})
+export class SectionHeaderComponent {
+  breadcrumb$: Observable<any[]>;
+  constructor(private bcservice: BreadcrumbService)
+    {
+      this.breadcrumb$= bcservice.breadcrumbs$;
+    }
+
+}
