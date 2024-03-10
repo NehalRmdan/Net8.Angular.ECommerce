@@ -12,6 +12,10 @@ import { ShopModule } from './shop/shop.module';
 import { HomeModule } from './home/home.module';
 import { ErrorInterceptor } from './core/interceptors/error.interceptor';
 import { ToastrModule } from 'ngx-toastr';
+import { NgxSpinnerModule } from 'ngx-spinner';
+import { LoadingInterceptor } from './core/interceptors/loading.interceptors';
+import { NgxCarouselModule } from 'ngx-carousel/src/ngx-carousel.module';
+import { CarouselModule } from 'ngx-owl-carousel-o';
 
 @NgModule({
   declarations: [
@@ -26,7 +30,9 @@ import { ToastrModule } from 'ngx-toastr';
         positionClass: 'toast-bottom-right',
         preventDuplicates : true
       }
-    ), // ToastrModule added
+    ), 
+    NgxSpinnerModule.forRoot({ type: 'ball-scale-multiple' }),
+    // ToastrModule added,
     CoreModule,
     HomeModule
   ],
@@ -38,7 +44,14 @@ import { ToastrModule } from 'ngx-toastr';
         // DI-based interceptors must be explicitly enabled.
         withInterceptorsFromDi(),
       ),
-      {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true},
+      {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true}
+    ],
+    [
+      provideHttpClient(
+        // DI-based interceptors must be explicitly enabled.
+        withInterceptorsFromDi(),
+      ),
+      {provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true}
     ]
     
   ],

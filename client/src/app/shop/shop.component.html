@@ -2,6 +2,7 @@
     
     <div class="row">
 
+        <ng-container *ngIf="(sortOptions && sortOptions.length >0) || (brands && brands.length >0) ">
         <section class="col-3">
             <h5 class="text-warning ml-3"> Sort</h5>
             <select (change)="onSelectdSortOptions($event.target)" class="form-select mb-3" aria-label="Default select example">
@@ -35,9 +36,10 @@
                 }
               </ul>
         </section>
+          </ng-container>
+
 
         <section class="col-9">
-
             <header>
                 <div class="d-flex justify-content-between">
                     <app-paging-header [totalCount]="totalCount" [pageNumber]="shopParams.pageNumber" [pageSize]="shopParams.pageSize"></app-paging-header>
@@ -49,7 +51,7 @@
                 </div>
                 
             </header>
-            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+            <div *ngIf="products && products.length >0" class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
                  
                 @for (item of products; track item.name) {
                 <div class="col">

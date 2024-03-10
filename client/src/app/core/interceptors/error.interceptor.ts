@@ -2,7 +2,7 @@ import { HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest
 import { Injectable } from "@angular/core";
 import { NavigationExtras, Router } from "@angular/router";
 import { ToastrService } from "ngx-toastr";
-import { Observable, catchError, throwError } from "rxjs";
+import { Observable, catchError, delay, throwError } from "rxjs";
 
 @Injectable()
  export class ErrorInterceptor implements HttpInterceptor {
@@ -13,10 +13,8 @@ import { Observable, catchError, throwError } from "rxjs";
   }
   
   intercept(req: HttpRequest<any>, handler: HttpHandler): Observable<HttpEvent<any>> {
-    console.log('Request URL: ' + req.url);
     return handler.handle(req).pipe(
       catchError((error: HttpErrorResponse) => {
-        debugger;
           let errorMsg = '';
           if (error.error instanceof ErrorEvent) {
               console.log('This is client side error');
