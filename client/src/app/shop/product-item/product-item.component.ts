@@ -1,6 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { IProduct } from '../../shared/Models/IProduct';
 import { Router } from '@angular/router';
+import { BasketService } from '../../basket/basket.service';
 
 @Component({
   selector: 'app-product-item',
@@ -8,14 +9,20 @@ import { Router } from '@angular/router';
   styleUrl: './product-item.component.scss'
 })
 export class ProductItemComponent {
-@Input() product :IProduct | undefined;
+@Input() product! :IProduct;
 
-constructor(private _router: Router)
+constructor(private _router: Router, private basketService : BasketService)
 {}
-onView(product : IProduct | undefined)
+
+onView(product : IProduct)
 {
- debugger;
  let id= product?.id;
  this._router.navigate(['/shop',id]);
 }
+
+AddItemToBasket()
+{
+  this.basketService.addItemToBasket(this.product);
+}
+
 }

@@ -35,7 +35,13 @@ public class Program
             var config= ConfigurationOptions.Parse(configuration.GetConnectionString("Redis"));
             return ConnectionMultiplexer.Connect(config);
         });
-
+        builder.Services.AddCors(opt =>
+        {
+            opt.AddPolicy("CorsPolicy", policy =>
+            {
+                policy.AllowAnyHeader().AllowAnyMethod().WithOrigins("https://localhost:4200");
+            });
+        });
         builder.Services.AddAutoMapper(typeof(MappingProfiles));
 
         builder.Services.AddApplicationServices();
@@ -64,11 +70,13 @@ public class Program
 
         app.UseHttpsRedirection();
 
-        app.UseAuthorization();
-
+        app.UseRouting();
         app.UseStaticFiles();
 
         app.MapControllers();
+
+       app.UseCors("CorsPolicy");
+       app.UseAuthorization();
 
         app.Run();
     }
