@@ -19,7 +19,6 @@ export class BasketService {
 
   private basketTotalSource = new BehaviorSubject<IBasketTotal | null>(null);
   basketTotal$ = this.basketTotalSource.asObservable();
-
   shipping=0;
 
   constructor(private http: HttpClient) { }
