@@ -12,12 +12,15 @@ using API.Errors;
 using API.Extensions;
 using StackExchange.Redis;
 using Humanizer.Configuration;
+using Infrastructure.Identity;
+using core.Entities.Identity;
+using Microsoft.AspNetCore.Identity;
 
 namespace API;
 
 public class Program
 {
-    public static void Main(string[] args)
+    public static async Task Main(string[] args)
     {
         var builder = WebApplication.CreateBuilder(args);
         var configuration= builder.Configuration;
@@ -26,33 +29,39 @@ public class Program
         builder.Services.AddControllers();
         // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
         builder.Services.AddEndpointsApiExplorer();
-        builder.Services.AddSwaggerGen();
+        builder.Services.AddSwaggerDocumentation();
         
         builder.Services.AddDbContext<StoreContext>(options=> 
         options.UseSqlite(configuration.GetConnectionString("DefaultConnection")));
         
+        builder.Services.AddDbContext<AppIdentityDbContext>(options =>
+        options.UseSqlite(configuration.GetConnectionString("IdentityConnection")));
+
         builder.Services.AddSingleton<IConnectionMultiplexer>(c => {
             var config= ConfigurationOptions.Parse(configuration.GetConnectionString("Redis"));
             return ConnectionMultiplexer.Connect(config);
         });
+
         builder.Services.AddCors(opt =>
         {
             opt.AddPolicy("CorsPolicy", policy =>
             {
-                policy.AllowAnyHeader().AllowAnyMethod().WithOrigins("https://localhost:4200");
+                policy.AllowAnyHeader().AllowAnyMethod().WithOrigins("https://localhost:4200","https://localhost:7105");
             });
         });
+
         builder.Services.AddAutoMapper(typeof(MappingProfiles));
 
         builder.Services.AddApplicationServices();
+
+        builder.Services.ConfigureIdentity(configuration);
 
         var app = builder.Build();
 
         // Configure the HTTP request pipeline.
         if (app.Environment.IsDevelopment())
         {
-            app.UseSwagger();
-            app.UseSwaggerUI(); 
+            app.UseSwaggerDocumentation();
         }
 
        app.UseStatusCodePagesWithReExecute("/errors/{0}");
@@ -66,6 +75,16 @@ public class Program
         db.Database.Migrate();
 
         StoreCotenxtDataSeeding.SeedData(db);
+        }
+
+        using (var scope = app.Services.CreateScope())
+         {
+        var db = scope.ServiceProvider.GetRequiredService<AppIdentityDbContext>();
+        var userManager = scope.ServiceProvider.GetRequiredService<UserManager<AppUser>>();
+
+        db.Database.Migrate();
+
+        await AppIdentityDbContextSeed.SeedUsersAsync(userManager);
         }
 
         app.UseHttpsRedirection();
