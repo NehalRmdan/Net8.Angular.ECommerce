@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using API.DTOS;
 using AutoMapper;
+using core.Entities;
 using core.Entities.Identity;
 using Core.Entities;
 
@@ -19,6 +20,11 @@ namespace API.Helper
             .ForMember(dest => dest.PictureUrl,opt => opt.MapFrom<ProductUrlResolver>());
 
             CreateMap<Address, AddressDto>();
+
+            CreateMap<BasketItem, BasketItemDTO>();
+            CreateMap<CustomerBasket, CustomerBasketDTO>();
+
+
 
         }
     }

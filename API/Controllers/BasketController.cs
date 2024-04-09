@@ -1,8 +1,6 @@
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
+
+using API.DTOS;
+using AutoMapper;
 using core.Entities;
 using core.Interfaces;
 using Microsoft.AspNetCore.Mvc;
@@ -14,10 +12,14 @@ namespace API.Controllers
     {
         private readonly ILogger<BasketController> _logger;
         private readonly IBasketRepository _basketRepository;
+        private readonly IMapper _mapper;
 
-        public BasketController(IBasketRepository basketRepository,ILogger<BasketController> logger)
+        public BasketController(IBasketRepository basketRepository,
+        IMapper mapper
+        ,ILogger<BasketController> logger)
         {
             _basketRepository = basketRepository;
+            _mapper = mapper;
             _logger = logger;
         }
 
@@ -30,11 +32,14 @@ namespace API.Controllers
         }
 
         [HttpPost]
-       public async Task<ActionResult<CustomerBasket>> UpdateBasketAsync(CustomerBasket basket)
+       public async Task<ActionResult<CustomerBasketDTO>> UpdateBasketAsync(CustomerBasketDTO basketDTO)
         {
+            var basket=_mapper.Map<CustomerBasket>(basketDTO);
+
             var result= await _basketRepository.UpdateBasketAsync( basket);
             
-            return  Ok(result);
+            return  Ok(_mapper.Map<CustomerBasketDTO>(result));
+
         }
 
         [HttpDelete]
