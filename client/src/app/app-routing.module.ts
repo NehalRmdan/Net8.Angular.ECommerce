@@ -12,7 +12,8 @@ const routes: Routes = [
   {path:'basket',  loadChildren: () => import('./basket/basket.module').then(m => m.BasketModule),
   data: { breadcrumb: 'Basket' }},
   {path:'checkout',  loadChildren: () => import('./checkout/checkout.module').then(m => m.CheckoutModule),
-  data: { breadcrumb: 'Basket' }},
+  data: { breadcrumb: 'Check Out' }},
+  {path:'',  loadChildren: () => import('./account/account.module').then(m => m.AccountModule)},
   {path:'test-errors', component: TestErrorComponent,data: { breadcrumb: 'test-error' }},
   {path:'server-error', component: ServerErrorComponent,data: { breadcrumb: 'server-error' }},
   {path:'not-found', component: NotFoundComponent,data: { breadcrumb: 'not-found' }}

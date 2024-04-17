@@ -16,6 +16,7 @@ import { NgxSpinnerModule } from 'ngx-spinner';
 import { LoadingInterceptor } from './core/interceptors/loading.interceptors';
 import { NgxCarouselModule } from 'ngx-carousel/src/ngx-carousel.module';
 import { CarouselModule } from 'ngx-owl-carousel-o';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import { CarouselModule } from 'ngx-owl-carousel-o';
     NgxSpinnerModule.forRoot({ type: 'ball-scale-multiple' }),
     // ToastrModule added,
     CoreModule,
-    HomeModule
+    HomeModule,
+    ReactiveFormsModule
   ],
   providers: [
     provideClientHydration(),

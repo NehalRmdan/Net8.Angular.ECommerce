@@ -4,6 +4,7 @@ import { PagingHeaderComponent } from './components/paging-header/paging-header.
 import { PagerComponent } from './components/pager/pager.component';
 import { PaginationModule } from 'ngx-bootstrap/pagination';
 import { OrderTotalsComponent } from './order-totals/order-totals.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
 
@@ -16,7 +17,9 @@ import { OrderTotalsComponent } from './order-totals/order-totals.component';
   ],
   imports: [
     CommonModule,
-    PaginationModule
+    PaginationModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
   exports:[
     PagingHeaderComponent,
