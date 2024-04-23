@@ -1,0 +1,33 @@
+
+<div class="form-floating">
+
+    <input 
+    [ngClass]="{  'is-invalid':  controlDir.control?.invalid && controlDir.control?.touched && controlDir.control?.errors } "
+      [type]="type"
+     class="form-control" id="{{label}}" 
+     #input
+     placeholder="{{label}}">
+    <label for="{{label}}">{{label}}</label>
+
+    <!-- <p>invalid: {{controlDir.control?.invalid}} touched:{{ controlDir.control?.touched}}</p>
+    <div class="invalid-feedback" *ngIf="(controlDir.control?.invalid && controlDir.control?.touched)">
+        <span *ngIf="controlDir.control && controlDir.control.errors && controlDir.control.errors['required'] ">{{label}} is required</span>
+        <span *ngIf="controlDir.control && controlDir.control.errors && controlDir.control.errors['pattern']">Invalid {{label}}</span>
+        
+    </div> -->
+
+        
+    @if ( controlDir.control && controlDir.control.invalid && controlDir.control.touched && controlDir.control.errors) {
+        <div class="invalid-feedback">
+          @if (controlDir.control.errors['required']) {
+          <div>Control is required</div>
+          }
+          @if (controlDir.control.errors['pattern']) {
+            <div>Control is invalid</div>
+            }
+        </div>
+        }
+
+
+ </div>
+  

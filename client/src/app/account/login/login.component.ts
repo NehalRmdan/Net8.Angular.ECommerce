@@ -10,9 +10,10 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class LoginComponent  implements OnInit{
 
+  submitted= false;
   loginForm: FormGroup = new FormGroup({
-    email: new FormControl('',Validators.required),
-    password: new FormControl('',Validators.required),
+    email: new FormControl('',[Validators.required, Validators.pattern('^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$')]),
+    password: new FormControl('',[Validators.required]),
   }) ;
   
   returnUrl:string='/shop';
@@ -29,7 +30,12 @@ export class LoginComponent  implements OnInit{
 
   onSubmit()
   {
-    debugger;
+    this.submitted = true;
+
+    if (this.loginForm.invalid) {
+      return;
+    }
+
     this.accountService.login(this.loginForm.value).subscribe({
       next:()=>{
         this.router.navigateByUrl(this.returnUrl);
@@ -45,6 +51,10 @@ export class LoginComponent  implements OnInit{
       email: new FormControl('',Validators.required),
       password: new FormControl('',Validators.required),
     });
+  }
+
+  get f(): { [key: string]: AbstractControl } {
+    return this.loginForm.controls;
   }
 
 }

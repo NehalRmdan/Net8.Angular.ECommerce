@@ -21,7 +21,7 @@ export class TestErrorComponent implements OnInit{
 
   get404Err()
   {
-    let url= this.baseUrl+ 'products/42';
+    let url= this.baseUrl+ '/products/42';
     this._http.get(url).subscribe({
       next: r => { console.log(r);},
       error: e=>{ console.log(e);}
@@ -30,7 +30,7 @@ export class TestErrorComponent implements OnInit{
 
   get500Err()
   {
-    let url= this.baseUrl+ 'api/buggy/server-error';
+    let url= this.baseUrl+ '/api/buggy/server-error';
     this._http.get(url).subscribe({
       next: r => { console.log(r);},
       error: e=>{ console.log(e);}
@@ -39,7 +39,7 @@ export class TestErrorComponent implements OnInit{
 
   get400Err() 
   {
-    let url= this.baseUrl+ 'api/buggy/bad-request';
+    let url= this.baseUrl+ '/api/buggy/bad-request';
     this._http.get(url).subscribe({
       next: r => { console.log(r);},
       error: e=>{ console.log(e);}
@@ -48,7 +48,7 @@ export class TestErrorComponent implements OnInit{
 
   get400ValidationErr()
   {
-    let url= this.baseUrl+ 'api/buggy/bad-request/five';
+    let url= this.baseUrl+ '/api/buggy/bad-request/five';
     this._http.get(url).subscribe({
       next: r => { console.log(r);},
       error: e=>{ 

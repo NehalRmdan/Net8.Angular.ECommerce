@@ -16,8 +16,8 @@ const routes: Routes = [
   {path:'',  loadChildren: () => import('./account/account.module').then(m => m.AccountModule)},
   {path:'test-errors', component: TestErrorComponent,data: { breadcrumb: 'test-error' }},
   {path:'server-error', component: ServerErrorComponent,data: { breadcrumb: 'server-error' }},
-  {path:'not-found', component: NotFoundComponent,data: { breadcrumb: 'not-found' }}
-  ,{path:'**', redirectTo:'not-found', pathMatch : 'full'}
+  // {path:'not-found', component: NotFoundComponent,data: { breadcrumb: 'not-found' }},
+   { path: '**', redirectTo: 'not-found', pathMatch: 'full' }
 ];
 
 @NgModule({

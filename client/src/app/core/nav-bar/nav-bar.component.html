@@ -11,12 +11,35 @@
       <li><a [routerLink]="'/test-errors'" routerLinkActive="link-secondary" class="nav-link px-2">Errors</a></li>
     </ul>
 
-    <div class="col-md-3 text-end">
-      <a [routerLink]="'/basket'" class="position-relative" style="cursor: pointer!important;"> 
-        <i class="fa fa-shopping-cart fa-2x me-5 "></i>
-       <div *ngIf="basket$ | async as basket" class="cart-no">{{ basket.items.length}}</div>
-      </a>
-      <button type="button"  [routerLink]="'/login'" class="btn btn-outline-primary me-2">Login</button>
-      <button type="button" [routerLink]="'/register'" class="btn btn-primary">Sign-up</button>
-    </div>
+    <ng-container *ngIf="(currentUser$ | async) === null ">
+      <div>
+          <a  [routerLink]="'/login'" class="btn btn-outline-primary me-2">Login</a>
+          <a  [routerLink]="'/register'" class="btn btn-primary">Sign-up</a>
+     </div>
+    </ng-container> 
+   
+    <ng-container *ngIf="(currentUser$ | async) as currentUser">
+      <div class="btn-group" dropdown>
+        <button type="button" class="btn btn-outline-primary"><strong>Welcome {{currentUser.displayName}}</strong></button>
+        <button id="button-split" type="button" dropdownToggle class="btn btn-danger dropdown-toggle dropdown-toggle-split"
+                aria-controls="dropdown-split">
+          <span class="caret"></span>
+          <span class="sr-only visually-hidden">Split button!</span>
+        </button>
+        <ul id="dropdown-split" *dropdownMenu class="dropdown-menu"
+            role="menu" aria-labelledby="button-split">
+          <li role="menuitem"> <a [routerLink]="'/basket'" class="position-relative" style="cursor: pointer!important;"> 
+            <i class="fa fa-shopping-cart fa-x "></i> View Basket
+           <div *ngIf="basket$ | async as basket" class="cart-no">{{ basket.items.length}}</div>
+          </a>        </li>
+          <li role="menuitem"><a class="dropdown-item" href="#">View Orders</a></li>
+          <li class="divider dropdown-divider"></li>
+          <li role="menuitem"><a  (click)="logout()"class="dropdown-item" href="#">Log Out</a>
+          </li>
+        </ul>
+      </div>
+    </ng-container>
+    
   </header>
+
+  

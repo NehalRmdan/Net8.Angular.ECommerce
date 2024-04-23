@@ -15,6 +15,7 @@ import { Observable, catchError, delay, throwError } from "rxjs";
   intercept(req: HttpRequest<any>, handler: HttpHandler): Observable<HttpEvent<any>> {
     return handler.handle(req).pipe(
       catchError((error: HttpErrorResponse) => {
+          debugger;
           let errorMsg = '';
           if (error.error instanceof ErrorEvent) {
               console.log('This is client side error');
@@ -22,7 +23,7 @@ import { Observable, catchError, delay, throwError } from "rxjs";
           } else {
               console.log('This is server side error');
               errorMsg = `Error Code: ${error.status},  Message: ${error.message}`;
-              if(error.status === 400)
+              if(error.status === 400 || error.status === 401)
               {
                 if(error.error.errors){
                   throw error.error;
@@ -39,7 +40,6 @@ import { Observable, catchError, delay, throwError } from "rxjs";
               }
 
           }
-          console.log(errorMsg);
           return throwError(() => new Error(errorMsg));
       })
   )
