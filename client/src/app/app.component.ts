@@ -27,6 +27,6 @@ constructor(private basketService: BasketService, private accountService : Accou
 
   private getCurrentUser() {
     let token  = localStorage.getItem('token');
-     this.accountService.loadCurrentUser(token).subscribe(x =>{console.log( 'user got') });
+     this.accountService.loadCurrentUser(token).subscribe;
   }
 }

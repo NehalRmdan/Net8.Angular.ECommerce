@@ -1,1 +1,82 @@
-<p>register works!</p>
+<div class="d-flex justify-content-center mt-5">
+    <div class="col-3">
+        <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+            <h1 class="h3 mb-3 fw-normal">Please register </h1>
+      
+            <!-- <app-text-input formControlName="email" [label]="'Email address'"></app-text-input>
+            <app-text-input formControlName="password" [type]="'password'" [label]="'password'"></app-text-input>
+             -->
+             <div class="form-floating">
+                <input 
+                 type="text"
+                 class="form-control" 
+                 [ngClass]="{  'is-invalid':  f['displayName'].invalid && f['displayName'].touched && f['displayName'].errors } "
+                 id="displayName" 
+                 formControlName="displayName"
+                 placeholder="displayName">
+                <label for="displayName">Display Name</label>
+            
+                @if ( f['displayName'].invalid && f['displayName'].touched && f['displayName'].errors) {
+                  <div class="invalid-feedback">
+                    @if (f['displayName'].errors['required']) {
+                    <div>Display Name is required</div>
+                    }
+                   
+                  </div>
+                  }
+    
+                </div>
+    
+             <div class="form-floating">
+              <input 
+               type="text"
+               class="form-control" 
+               [ngClass]="{  'is-invalid':  f['email'].invalid && f['email'].touched && f['email'].errors } "
+               id="email" 
+               formControlName="email"
+               placeholder="email">
+              <label for="email">Email Address</label>
+          
+              <div *ngIf="f['email'].status === 'PENDING'" class="fa fa-spinner fa-spin loader"></div>
+
+              @if ( f['email'].invalid && f['email'].touched && f['email'].errors) {
+                <div class="invalid-feedback">
+                  @if (f['email'].errors['required']) {
+                  <div>Email is required</div>
+                  }
+                  @if (f['email'].errors['pattern']) {
+                    <div>Email is invalid</div>
+                    }
+                @if (f['email'].errors['emailExists']) {
+                        <div>Email is duplicate</div>
+                        }
+                </div>
+                }
+  
+              </div>
+  
+             
+           <div class="form-floating">
+            <input 
+             type="password"
+             class="form-control" 
+             [ngClass]="{ 'is-invalid':  f['password'].invalid && f['password'].touched && f['password'].errors }"
+             id="password" 
+             formControlName="password"
+             placeholder="password">
+            <label for="password">Password</label>
+        
+            @if (f['password'].invalid && f['password'].touched && f['password'].errors) {
+              <div class="invalid-feedback">
+                @if ( f['password'].errors['required']) {
+                <div>password is required</div>
+                }
+              </div>
+              }
+            </div>
+
+          <button [disabled]="registerForm.invalid" class="btn btn-primary w-100 py-2" type="submit">Register</button>
+ 
+        </form>
+    </div>
+</div>

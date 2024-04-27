@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
-import { BehaviorSubject, EMPTY, Observable, map, of } from 'rxjs';
+import { BehaviorSubject, EMPTY, Observable, ReplaySubject, map, of } from 'rxjs';
 import { IUser } from '../shared/Models/User';
 import { Router } from '@angular/router';
 
@@ -13,20 +13,16 @@ export class AccountService {
   constructor(private http: HttpClient, private router: Router) { }
 
   baseUrl= environment.apiUrl;
-  currentUser= new BehaviorSubject<IUser|null>(null);
+  currentUser= new ReplaySubject<IUser|null>(1);
   user$=this.currentUser.asObservable();
   
-  getCurrentUser()
-  {
-    return this.currentUser.value;
-  }
-
   loadCurrentUser(token : string | null)
   {
+    debugger;
     if(token == null)
       { 
         this.currentUser.next(null);
-        return EMPTY;
+        return of(null);
       }
 
     let httpHeader:HttpHeaders = new HttpHeaders();
@@ -73,6 +69,12 @@ export class AccountService {
     this.currentUser.next(null);
     localStorage.removeItem("token");
     this.router.navigateByUrl('/');
+  }
+
+  CheckEmailExists(email : string)
+  {
+    let url= this.baseUrl + '/api/account/email-exists?email=' + email;
+    return this.http.get<Boolean>(url);
   }
 
 }
