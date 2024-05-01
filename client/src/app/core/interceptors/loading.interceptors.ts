@@ -14,6 +14,12 @@ import { BusyService } from "../services/busy.service";
   }
   
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    
+    if(req.url.includes('email-exists'))
+      {
+        return next.handle(req);
+      }
+
     this.busyService.busy();
     return next.handle(req).pipe(
       delay(1000),
