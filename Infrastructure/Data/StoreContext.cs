@@ -4,6 +4,7 @@ using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using core.Entities;
+using core.Entities.OrderAggregates;
 using Core.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
@@ -48,6 +49,11 @@ namespace Infrastructure.Data
 
         public DbSet<ProductType> ProductTypes { get; set; }
 
+        public DbSet<Order> Orders { get; set; }
+
+        public DbSet<OrderItem> OrderItems { get; set; }
+
+        public DbSet<DeliveryMethod> DeliveryMethods  { get; set; }
 
     }
 }

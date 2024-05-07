@@ -5,6 +5,7 @@ using System.Reflection;
 using System.Text.Json;
 using System.Threading.Tasks;
 using core.Entities;
+using core.Entities.OrderAggregates;
 using Core.Entities;
 using Infrastructure.Data;
 
@@ -48,6 +49,19 @@ namespace IInfrastructure.Data
             }
             sc.SaveChanges();
             }
+
+             if(!sc.DeliveryMethods.Any())
+            {
+            var deliveryMethods= File.OpenRead(path+@"\Data\SeedData\delivery.json");
+            var methods=JsonSerializer.Deserialize<List<DeliveryMethod>>(deliveryMethods);
+            foreach(var m in methods)
+            {
+                sc.DeliveryMethods.Add(m);
+            }
+            sc.SaveChanges();
+            }
+
+
         }
     }
 }
