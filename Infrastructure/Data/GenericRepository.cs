@@ -18,6 +18,16 @@ namespace Infrastructure.Data
             _storeContext = storeContext;
         }
 
+        public void Add(T entity)
+        {
+          _storeContext.Set<T>().Add(entity);
+        }
+
+        public void Delete(T entity)
+        {
+          _storeContext.Set<T>().Remove(entity);
+        }
+
         public async Task<T> GetByID(int id)
         {
            return await _storeContext.Set<T>().FindAsync(id);
@@ -43,9 +53,19 @@ namespace Infrastructure.Data
              return await ApplySpecification(spec).ToListAsync();
         }
 
-         private IQueryable<T> ApplySpecification(ISpecification<T> spec)
+        public void Update(T entity)
+        {
+           _storeContext.Set<T>().Update(entity);
+        }
+
+        private IQueryable<T> ApplySpecification(ISpecification<T> spec)
         {
             return SpecificationEvaluator<T>.GetQuery(_storeContext.Set<T>().AsQueryable(), spec);
+        }
+
+        Task<IReadOnlyList<T>> IGenericRepository<T>.GetListAsync()
+        {
+            throw new NotImplementedException();
         }
     }
 }

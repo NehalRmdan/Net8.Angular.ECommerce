@@ -10,7 +10,7 @@ namespace core.Interfaces
     public interface IGenericRepository<T>  
     {
 
-        public Task<IReadOnlyCollection<T>> GetListAsync();
+        public Task<IReadOnlyList<T>> GetListAsync();
         
         public Task<IReadOnlyList<T>> GetListAsync(ISpecification<T> specification);
 
@@ -20,5 +20,8 @@ namespace core.Interfaces
 
         public Task<T> GetByIDAsync(ISpecification<T> specification);
 
+        public void Add(T entity);
+        public void Update(T entity);
+        public void Delete(T entity);
     }
 }
