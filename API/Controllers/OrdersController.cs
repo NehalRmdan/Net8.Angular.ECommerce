@@ -22,53 +22,55 @@ namespace API.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<Order>> CreateOrder(OrderDTO orderDto)
+        public async Task<ActionResult<OrderToReturnDTO>> CreateOrder(OrderDTO orderDto)
         {
-           var buyerEmail= User.RetrieveEmailFromPrincipal();
-                       
-            var shippingAddress= _mapper.Map<AddressDto, Address>(orderDto.ShipToAddress);
+            var buyerEmail = User.RetrieveEmailFromPrincipal();
 
-            var order= await _orderService.CreateOrderAsync(buyerEmail,orderDto.DeliveryMethodId,orderDto.BasketId,shippingAddress);
+            var shippingAddress = _mapper.Map<AddressDto, Address>(orderDto.ShipToAddress);
 
-            if(order == null) return BadRequest(new APIResponse(400, "Problem creating order"));
-            
-            return Ok(order);
+            var order = await _orderService.CreateOrderAsync(buyerEmail, orderDto.DeliveryMethodId, orderDto.BasketId, shippingAddress);
+
+            if (order == null) return BadRequest(new APIResponse(400, "Problem creating order"));
+
+            var orderToReturn = _mapper.Map<OrderToReturnDTO>(order);
+
+            return Ok(orderToReturn);
         }
-        
-        [HttpGet]
+
+        [HttpGet("my")]
         public async Task<ActionResult<IReadOnlyList<OrderToReturnDTO>>> GetOrders()
         {
-           var buyerEmail= User.RetrieveEmailFromPrincipal();
+            var buyerEmail = User.RetrieveEmailFromPrincipal();
 
-            var orders= await _orderService.GetOrdersForUserAsync(buyerEmail);
-            
-            var mappedOrders=_mapper.Map<IReadOnlyList<OrderToReturnDTO>>(orders);
-            
+            var orders = await _orderService.GetOrdersForUserAsync(buyerEmail);
+
+            var mappedOrders = _mapper.Map<IReadOnlyList<OrderToReturnDTO>>(orders);
+
             return Ok(mappedOrders);
         }
 
-         [HttpGet("{id}")]
+        [HttpGet("my/{id}")]
         public async Task<ActionResult<OrderToReturnDTO>> GetOrder(int id)
         {
-            var buyerEmail= User.RetrieveEmailFromPrincipal();
-            
+            var buyerEmail = User.RetrieveEmailFromPrincipal();
+
             var order = await _orderService.GetOrderByIdAsync(id, buyerEmail);
 
-            if( order == null) return NotFound( new APIResponse(404));
-           
-           return _mapper.Map<OrderToReturnDTO>(order);
+            if (order == null) return NotFound(new APIResponse(404));
+
+            return Ok(_mapper.Map<OrderToReturnDTO>(order));
         }
 
 
         [HttpGet("delivery-methods")]
         public async Task<ActionResult<IReadOnlyList<DeliveryMethod>>> GetDeliveryMethods()
         {
-            
-            var deliveryMethods= await _orderService.GetDeliveryMethodsAsync();
-                        
+
+            var deliveryMethods = await _orderService.GetDeliveryMethodsAsync();
+
             return Ok(deliveryMethods);
         }
-    
+
 
     }
 }

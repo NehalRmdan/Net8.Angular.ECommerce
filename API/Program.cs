@@ -29,7 +29,12 @@ public class Program
         builder.Services.AddControllers();
         // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
         builder.Services.AddEndpointsApiExplorer();
-        builder.Services.AddSwaggerDocumentation();
+        builder.Services.AddSwaggerGen(config =>
+        {
+            // two classes same name in different namespacer
+            //use fully qualified object names
+            config.CustomSchemaIds(x => x.FullName);
+        });
         
         builder.Services.AddDbContext<StoreContext>(options=> 
         options.UseSqlite(configuration.GetConnectionString("DefaultConnection")));

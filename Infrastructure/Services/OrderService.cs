@@ -9,10 +9,10 @@ namespace Infrastructure.Services
 {
     public class OrderService : IOrderService
     {
-        private readonly BasketRepository _basketRepository;
+        private readonly IBasketRepository _basketRepository;
         private readonly IUnitOfWork _unitOfWork;
 
-        public OrderService(BasketRepository basketRepository
+        public OrderService(IBasketRepository basketRepository
         , IUnitOfWork unitOfWork)
         {
             _basketRepository = basketRepository;
@@ -48,12 +48,13 @@ namespace Infrastructure.Services
                 paymentIntentId : 1
             );
 
+            _unitOfWork.Repository<Order>().Add(order);
 
             //Save order to DB
             var result=await _unitOfWork.Complete();
 
             if(result <= 0) return null; 
-            
+
             return order;
         }
 

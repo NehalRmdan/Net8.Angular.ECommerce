@@ -1,18 +1,16 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using core.Entities.OrderAggregates;
 
 namespace API.DTOS
 {
     public class OrderToReturnDTO
     {
+        public int Id { get; set; }
+
         public IReadOnlyList<OrderItemDTO> OrderItems { get; set; }
 
         public string BuyerEmail { get; set; }
 
-        public DateTimeOffset OrderDate { get; set; } 
+        public DateTimeOffset OrderDate { get; set; }
 
         public Address ShippedToAddress { get; set; }
 

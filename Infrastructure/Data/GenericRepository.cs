@@ -43,7 +43,7 @@ namespace Infrastructure.Data
           return await ApplySpecification(specification).CountAsync();
         }
 
-        public async Task<IReadOnlyCollection<T>> GetListAsync()
+        public async Task<IReadOnlyList<T>> GetListAsync()
         {
              return await _storeContext.Set<T>().ToListAsync();
         }
@@ -61,11 +61,6 @@ namespace Infrastructure.Data
         private IQueryable<T> ApplySpecification(ISpecification<T> spec)
         {
             return SpecificationEvaluator<T>.GetQuery(_storeContext.Set<T>().AsQueryable(), spec);
-        }
-
-        Task<IReadOnlyList<T>> IGenericRepository<T>.GetListAsync()
-        {
-            throw new NotImplementedException();
         }
     }
 }

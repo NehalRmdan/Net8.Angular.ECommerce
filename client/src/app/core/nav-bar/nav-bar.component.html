@@ -11,6 +11,12 @@
       <li><a [routerLink]="'/test-errors'" routerLinkActive="link-secondary" class="nav-link px-2">Errors</a></li>
     </ul>
 
+    <div class="d-flex align-items-center">
+      <a routerLink='/basket' class="position-relative">
+        <i class="fa fa-shopping-cart fa-2x me-5 text-dark"></i>
+        <div *ngIf="(basket$ | async) as basket" class="cart-no">{{basket.items.length}}</div>
+      </a>
+  
     <ng-container *ngIf="(currentUser$ | async) === null ">
       <div>
           <a  [routerLink]="'/login'" class="btn btn-outline-primary me-2">Login</a>
@@ -30,8 +36,8 @@
             role="menu" aria-labelledby="button-split">
           <li role="menuitem"> <a [routerLink]="'/basket'" class="position-relative" style="cursor: pointer!important;"> 
             <i class="fa fa-shopping-cart fa-x "></i> View Basket
-           <div *ngIf="basket$ | async as basket" class="cart-no">{{ basket.items.length}}</div>
-          </a>        </li>
+          </a>        
+        </li>
           <li role="menuitem"><a class="dropdown-item" href="#">View Orders</a></li>
           <li class="divider dropdown-divider"></li>
           <li role="menuitem"><a  (click)="logout()"class="dropdown-item" href="#">Log Out</a>
@@ -39,7 +45,8 @@
         </ul>
       </div>
     </ng-container>
-    
+    </div>
+
   </header>
 
   
