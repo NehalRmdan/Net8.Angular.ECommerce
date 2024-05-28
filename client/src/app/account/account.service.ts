@@ -16,28 +16,28 @@ export class AccountService {
   currentUser= new ReplaySubject<IUser|null>(1);
   user$=this.currentUser.asObservable();
   
-  loadCurrentUser(token : string | null)
-  {
-    debugger;
-    if(token == null)
-      { 
-        this.currentUser.next(null);
-        return of(null);
-      }
+  
 
-    let httpHeader:HttpHeaders = new HttpHeaders();
-    httpHeader=httpHeader.set('authorization',`Bearer ${token}`);
 
-    let url= this.baseUrl + '/api/account/user';
-    return this.http.get<IUser>(url,{ headers: httpHeader}).pipe(
-      map((user: IUser) =>{
-        if(user)
-          {
-        localStorage.setItem("token",user.token);
-        this.currentUser.next(user);
-          }
-      
-      })) 
+  loadCurrentUser(token: string | null): Observable<IUser | null> {
+    if (token === null) {
+      this.currentUser.next(null);
+      return of(null);
+    }
+
+    let httpHeader: HttpHeaders = new HttpHeaders();
+    httpHeader = httpHeader.set('Authorization', `Bearer ${token}`);
+
+    const url = `${this.baseUrl}/api/account/user`;
+    return this.http.get<IUser>(url, { headers: httpHeader }).pipe(
+      map((user: IUser) => {
+        if (user) {
+          localStorage.setItem('token', user.token);
+          this.currentUser.next(user);
+        }
+        return user;
+      })
+    );
   }
 
   login(values: any)
