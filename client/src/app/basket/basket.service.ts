@@ -5,6 +5,7 @@ import { environment } from '../../environments/environment';
 import { IBasketItem } from '../shared/Models/BasketItem';
 import { IProduct } from '../shared/Models/IProduct';
 import { BehaviorSubject, map } from 'rxjs';
+import { IDeliveryMethod } from '../shared/Models/DeliveryMethod';
 
 @Injectable({
   providedIn: 'root'
@@ -160,4 +161,12 @@ export class BasketService {
     this.basketTotalSource.next({shipping,total,subtotal});
   }
 
+  // setShippingPrice(deliveryMethod: IDeliveryMethod) {
+  //   this.shipping = deliveryMethod.price;
+  //   const basket = this.getCurrentBasket();
+  //   basket.deliveryMethodId = deliveryMethod.id;
+  //   basket.shippingPrice = deliveryMethod.price;
+  //   this.calculateTotals();
+  //   this.setBasket(basket);
+  // }
 }

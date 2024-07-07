@@ -1,1 +1,99 @@
-<p>checkout-address works!</p>
+<div class="mt-4" [formGroup]="checkoutForm">
+    <div class="d-flex justify-content-between align-items-center">
+        <h4>Shipping address</h4>
+        <button 
+            (click)="saveUserAddress()" 
+            class="btn btn-outline-success mb-3"
+            [disabled]="!checkoutForm.get('addressForm')?.valid || !checkoutForm.get('addressForm')?.dirty"
+        >
+            Save as default address
+        </button>
+    </div>
+
+<div class="row" formGroupName="addressForm">
+    <div class="form-group col-6">
+      <label for="firstName">First Name</label>
+      <input   class="form-control"  type="text" formControlName="firstName">
+    </div>
+
+    <!-- @if ( f['firstName'].invalid && f['firstName'].touched && f['firstName'].errors) {
+      <div class="invalid-feedback">
+        @if (f['firstName'].errors['firstName']) {
+        <div>firstName is required</div>
+        }
+      </div>
+      } -->
+
+    <div class="form-group col-6">
+      <label for="lastName">Last Name</label>
+      <input class="form-control" type="text" formControlName="lastName">
+    </div>
+<!--   
+    @if ( f['lastName'].invalid && f['lastName'].touched && f['lastName'].errors) {
+      <div class="invalid-feedback">
+        @if (f['lastName'].errors['lastName']) {
+        <div>Last name is required</div>
+        }
+      </div>
+      } -->
+
+    <div class="form-group col-6">
+      <label for="city">City</label>
+      <input class="form-control" type="text" formControlName="city">
+    </div>
+
+    <!-- @if ( f['city'].invalid && f['city'].touched && f['city'].errors) {
+      <div class="invalid-feedback">
+        @if (f['city'].errors['city']) {
+        <div>city is required</div>
+        }
+      </div>
+      }
+   -->
+    <div class="form-group col-6">
+      <label for="state">State</label>
+      <input class="form-control" type="text" formControlName="state">
+    </div>
+
+    <!-- @if ( f['state'].invalid && f['state'].touched && f['state'].errors) {
+      <div class="invalid-feedback">
+        @if (f['state'].errors['state']) {
+        <div>state is required</div>
+        }
+      </div>
+      } -->
+  
+    <div class="form-group col-6">
+      <label for="street">Street</label>
+      <input class="form-control" type="text" formControlName="street">
+    </div>
+  
+    <!-- @if ( f['street'].invalid && f['street'].touched && f['street'].errors) {
+      <div class="invalid-feedback">
+        @if (f['street'].errors['street']) {
+        <div>street is required</div>
+        }
+      </div>
+      } -->
+
+    <div class="form-group col-6">
+      <label for="building">Building</label>
+      <input class="form-control" type="text" formControlName="building">
+    </div>
+  
+    <div class="form-group col-6">
+      <label for="apartment">Apartment</label>
+      <input class="form-control" type="text" formControlName="apartment">
+    </div>
+  
+    <div class="form-group col-6">
+      <label for="zipCode">ZIP Code</label>
+      <input class="form-control" type="text" formControlName="zipCode">
+    </div>
+  
+    <div class="form-group col-6">
+      <label for="mark">Mark</label>
+      <input class="form-control" type="text" formControlName="mark">
+    </div>
+</div>
+</div>

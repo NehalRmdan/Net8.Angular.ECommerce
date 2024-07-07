@@ -17,6 +17,7 @@ import { LoadingInterceptor } from './core/interceptors/loading.interceptors';
 import { NgxCarouselModule } from 'ngx-carousel/src/ngx-carousel.module';
 import { CarouselModule } from 'ngx-owl-carousel-o';
 import { ReactiveFormsModule } from '@angular/forms';
+import { TokenInterceptor } from './core/interceptors/token.interceptor';
 
 @NgModule({
   declarations: [
@@ -53,7 +54,9 @@ import { ReactiveFormsModule } from '@angular/forms';
         // DI-based interceptors must be explicitly enabled.
         withInterceptorsFromDi(),
       ),
-      {provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true}
+      {provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true},
+      {provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true}
+
     ]
     
   ],
