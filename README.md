@@ -16,6 +16,8 @@ infrastructure, and frontend UI.
 It is designed to be **extensible**, allowing future enhancements such
 as authentication, payment gateways, and advanced order processing.
 
+It is based on youtube course "Learn to build an e-commerce app with Net and Angular in .net3 & angular 9" which is not available now
+.
 ------------------------------------------------------------------------
 
 ## 🧱 Project Structure
